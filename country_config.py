@@ -108,6 +108,55 @@ COUNTRIES = {
             2018: 670, 2019: 890, 2020: 1030,
         },
     },
+    "AT": {
+        "name": "Austria",
+        "generation_source": "opsd_wide",
+        "opsd_column": "AT_solar_generation_actual",
+        "weather_file": "open-meteo-vienna.csv",
+        "latitude": 48.19,
+        "longitude": 16.38,
+        "avg_ghi_kwh_m2_day": 3.2,   # APPROXIMATE - Alpine/continental, similar order to Germany
+        "capacity_mw_by_year": {
+            # APPROXIMATE (Wikipedia/SolarPower Europe) - Austria's PV market was fairly small
+            # and slow-growing until a recent boom (post-2021, not covered by our data range).
+            # Verify against Our World in Data before relying on this.
+            2015: 800, 2016: 900, 2017: 1000,
+            2018: 1100, 2019: 1200, 2020: 1400,
+        },
+    },
+    "BE": {
+        "name": "Belgium",
+        "generation_source": "opsd_wide",
+        "opsd_column": "BE_solar_generation_actual",
+        "weather_file": "open-meteo-brussels.csv",
+        "latitude": 50.86,
+        "longitude": 4.33,
+        "avg_ghi_kwh_m2_day": 2.8,   # APPROXIMATE - similar cloudy/temperate profile to Germany/Netherlands
+        "capacity_mw_by_year": {
+            # APPROXIMATE (Wikipedia: 2,983 MW end of 2013, 4,254 MW end of 2018, steady growth
+            # in between) - verify against Our World in Data before relying on this.
+            2015: 3200, 2016: 3400, 2017: 3800,
+            2018: 4254, 2019: 4500, 2020: 4700,
+        },
+    },
+    "DK": {
+        "name": "Denmark",
+        "generation_source": "opsd_wide",
+        "opsd_column": "DK_solar_generation_actual",
+        "weather_file": "open-meteo-copenhagen.csv",
+        "latitude": 55.64,
+        "longitude": 12.60,
+        "avg_ghi_kwh_m2_day": 2.6,   # APPROXIMATE - Denmark has lower solar insolation than most of
+                                     # our other countries (Wikipedia: "lower solar insolation than
+                                     # many countries closer to Equator")
+        "capacity_mw_by_year": {
+            # APPROXIMATE (Wikipedia: 200MW target reached in 2012, growth was fairly slow/flat
+            # through the later 2010s until incentive changes) - verify against Our World in Data
+            # before relying on this.
+            2015: 800, 2016: 850, 2017: 900,
+            2018: 950, 2019: 1000, 2020: 1050,
+        },
+    },
     # Add Netherlands/Poland (different generation_source) here in future.
 }
 

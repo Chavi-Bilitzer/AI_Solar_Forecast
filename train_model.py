@@ -24,6 +24,9 @@ COUNTRY_FILES = {
     "GR": "data/GR_IT_opsd_extract.csv",
     "IT": "data/GR_IT_opsd_extract.csv",
     "PT": "data/PT_opsd_extract.csv",
+    "AT": "data/AT_BE_DK_opsd_extract.csv",
+    "BE": "data/AT_BE_DK_opsd_extract.csv",
+    "DK": "data/AT_BE_DK_opsd_extract.csv",
 }
 WEATHER_DIR = "data/"
 
