@@ -20,7 +20,7 @@ from build_dataset import build_dataset, FEATURES, TARGET
 # ------------------------------------------------------------------
 COUNTRY_FILES = {
     "ES": "data/ES_solar_generaition_1_.csv",
-    # "DE": "data/DE_opsd_extract.csv",   # uncomment once the DE weather file + extract exist
+    "DE": "data/DE_opsd_extract.csv",
 }
 WEATHER_DIR = "data/"
 

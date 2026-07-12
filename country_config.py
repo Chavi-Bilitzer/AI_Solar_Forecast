@@ -51,7 +51,7 @@ COUNTRIES = {
         "name": "Germany",
         "generation_source": "opsd_wide",
         "opsd_column": "DE_solar_generation_actual",
-        "weather_file": "open-meteo-berlin.csv",  # TODO: Chavi downloads this from Open-Meteo
+        "weather_file": "open-meteo-berlin.csv",
         "latitude": 52.52,
         "longitude": 13.41,
         "avg_ghi_kwh_m2_day": 2.9,   # Berlin area - much lower irradiance than Spain

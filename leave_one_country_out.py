@@ -28,7 +28,7 @@ from train_model import chronological_split, train_xgb, evaluate
 
 COUNTRY_FILES = {
     "ES": "data/ES_solar_generaition_1_.csv",
-    # "DE": "data/DE_opsd_extract.csv",   # add a second country to actually run LOCO
+    "DE": "data/DE_opsd_extract.csv",
 }
 WEATHER_DIR = "data/"
 
