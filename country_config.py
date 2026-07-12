@@ -92,6 +92,22 @@ COUNTRIES = {
             2018: 20100, 2019: 20900, 2020: 21600,
         },
     },
+    "PT": {
+        "name": "Portugal",
+        "generation_source": "opsd_wide",
+        "opsd_column": "PT_solar_generation_actual",
+        "weather_file": "open-meteo-faro.csv",
+        "latitude": 37.02,
+        "longitude": -7.93,
+        "avg_ghi_kwh_m2_day": 4.8,   # southern Portugal (Faro/Algarve) - one of Europe's sunniest regions, slightly higher than Seville
+        "capacity_mw_by_year": {
+            # APPROXIMATE (Wikipedia/Statista/IEA-PVPS) - Portugal grew slowly until 2018 then
+            # accelerated (+190MW 2018, +220MW 2019, reaching ~1030MW by end of 2020).
+            # Verify against Our World in Data before relying on this.
+            2015: 400, 2016: 430, 2017: 480,
+            2018: 670, 2019: 890, 2020: 1030,
+        },
+    },
     # Add Netherlands/Poland (different generation_source) here in future.
 }
 
