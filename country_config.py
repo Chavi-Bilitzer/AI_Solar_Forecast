@@ -62,7 +62,37 @@ COUNTRIES = {
             2018: 45900, 2019: 49500, 2020: 54000,
         },
     },
-    # Add Greece, and later Italy/Netherlands/Poland (different generation_source), here.
+    "GR": {
+        "name": "Greece",
+        "generation_source": "opsd_wide",
+        "opsd_column": "GR_solar_generation_actual",
+        "weather_file": "open-meteo-athens.csv",
+        "latitude": 37.98,
+        "longitude": 23.73,
+        "avg_ghi_kwh_m2_day": 4.5,   # Greece gets ~50% more solar irradiation than Germany (Wikipedia)
+        "capacity_mw_by_year": {
+            # APPROXIMATE (Wikipedia/Statista) - capacity was fairly flat 2015-2018, growth
+            # resumed 2019+. Verify against Our World in Data before relying on this.
+            2015: 2600, 2016: 2610, 2017: 2650,
+            2018: 2650, 2019: 2830, 2020: 3020,
+        },
+    },
+    "IT": {
+        "name": "Italy",
+        "generation_source": "opsd_wide",
+        "opsd_column": "IT_solar_generation_actual",
+        "weather_file": "open-meteo-rome.csv",
+        "latitude": 41.90,
+        "longitude": 12.49,
+        "avg_ghi_kwh_m2_day": 4.0,   # ranges ~3.6 (Po valley, north) to ~4.6 (Sicily, south) - Rome is roughly the middle
+        "capacity_mw_by_year": {
+            # APPROXIMATE (Wikipedia: ~2% annual growth, 300-400 MW/year 2014-2018) - verify
+            # against Our World in Data before relying on this.
+            2015: 18900, 2016: 19300, 2017: 19700,
+            2018: 20100, 2019: 20900, 2020: 21600,
+        },
+    },
+    # Add Netherlands/Poland (different generation_source) here in future.
 }
 
 
