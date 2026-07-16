@@ -40,7 +40,7 @@ WEATHER_DIR = "data/"
 
 
 def run_loco(df: pd.DataFrame):
-    countries = sorted(df["country"].unique())
+    countries = sorted(df["country"].unique())  # every country present in the combined dataset
     if len(countries) < 2:
         print(f"Only {len(countries)} country in the dataset ({countries}). "
               f"LOCO needs at least 2 - add another country to COUNTRY_FILES first.")

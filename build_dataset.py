@@ -65,10 +65,12 @@ def build_dataset(country_files: dict, weather_dir: str = "data/") -> pd.DataFra
     train_model.py or leave_one_country_out.py.
     """
     print(f"Building dataset for: {list(country_files.keys())}")
+    # Build each country's feature-engineered frame separately...
     parts = [
         _build_single_country(code, path, weather_dir)
         for code, path in country_files.items()
     ]
+    # ...then stack them all into one combined frame, sorted for readability
     combined = pd.concat(parts, ignore_index=True).sort_values(["country", "timestamp"]).reset_index(drop=True)
     print(f"\nCombined dataset: {len(combined)} rows across {combined['country'].nunique()} countries")
     return combined

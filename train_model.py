@@ -54,15 +54,18 @@ def chronological_split(df: pd.DataFrame, train_frac=0.70, val_frac=0.15):
 
 
 def train_xgb(train, val):
+    # Gradient-boosted tree regressor - a solid, fast default for tabular
+    # data like this (weather + time features -> capacity factor).
     model = xgb.XGBRegressor(
-        n_estimators=1000,
-        learning_rate=0.05,
-        max_depth=5,
-        subsample=0.8,
-        colsample_bytree=0.8,
-        early_stopping_rounds=30,
+        n_estimators=1000,          # upper bound on trees; early stopping decides the real count
+        learning_rate=0.05,         # small steps = more stable convergence
+        max_depth=5,                # keeps individual trees shallow to avoid overfitting
+        subsample=0.8,              # row subsampling per tree (regularization)
+        colsample_bytree=0.8,       # column subsampling per tree (regularization)
+        early_stopping_rounds=30,   # stop once validation score stops improving for 30 rounds
         eval_metric="rmse",
     )
+    # Fit on the training split, monitoring the validation split for early stopping
     model.fit(train[FEATURES], train[TARGET],
               eval_set=[(val[FEATURES], val[TARGET])], verbose=False)
     return model
@@ -70,10 +73,14 @@ def train_xgb(train, val):
 
 def evaluate(model, test: pd.DataFrame, label: str = "Test set"):
     pred = model.predict(test[FEATURES])
+    # Capacity factor is physically bounded in [0, 1] - clip any small
+    # numerical over/undershoot from the model
     pred = np.clip(pred, 0, 1)
 
     rmse = np.sqrt(mean_squared_error(test[TARGET], pred))
     mae = mean_absolute_error(test[TARGET], pred)
+    # MAPE is only meaningful when the actual value isn't ~0 (division blows
+    # up at night), so restrict it to daytime rows
     daytime_mask = test[TARGET].values > 0.01
     mape = np.mean(np.abs(
         (test[TARGET].values[daytime_mask] - pred[daytime_mask]) / test[TARGET].values[daytime_mask]
@@ -88,21 +95,27 @@ def evaluate(model, test: pd.DataFrame, label: str = "Test set"):
 
 
 if __name__ == "__main__":
+    # 1. Build the combined, feature-engineered dataset for all configured countries
     df = build_dataset(COUNTRY_FILES, weather_dir=WEATHER_DIR)
-    df = df.dropna(subset=FEATURES + [TARGET])
+    df = df.dropna(subset=FEATURES + [TARGET])  # drop rows missing any feature or the target
 
+    # 2. Split chronologically (per country) into train/validation/test
     train, val, test = chronological_split(df)
     print(f"\nTrain: {len(train)} | Validation: {len(val)} | Test: {len(test)}")
 
+    # 3. Train the model, using the validation set for early stopping
     model = train_xgb(train, val)
     print(f"Best iteration: {model.best_iteration}")
 
+    # 4. Evaluate on the held-out test set
     results = evaluate(model, test)
 
+    # 5. Inspect which features the model relied on most
     importances = pd.Series(model.feature_importances_, index=FEATURES).sort_values(ascending=False)
     print("\nFeature importances:")
     print(importances.to_string())
 
+    # 6. Save a bar chart of feature importances for a quick visual check
     fig, ax = plt.subplots(figsize=(10, 5))
     ax.barh(importances.index, importances.values)
     ax.set_title("Feature importance")
@@ -111,5 +124,6 @@ if __name__ == "__main__":
     plt.savefig("model_evaluation.png", dpi=150)
     print("\nSaved: model_evaluation.png")
 
+    # 7. Persist the trained model to disk for later reuse
     model.save_model("xgb_solar_model.json")
     print("Saved: xgb_solar_model.json")
